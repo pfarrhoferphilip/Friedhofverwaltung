@@ -1,0 +1,9 @@
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/preflight" layer(base);
+@import "tailwindcss/utilities" layer(utilities);
+
+/* Your custom styles */
+@layer base {
+  /* Custom base styles */
+
+}

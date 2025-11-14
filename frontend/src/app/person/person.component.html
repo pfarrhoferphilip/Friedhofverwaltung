@@ -1,0 +1,53 @@
+<div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+  <div class="bg-white shadow-lg rounded-xl max-w-md w-full p-6">
+    <!-- Name + Hausname -->
+    <div class="text-center mb-6">
+      <h1 class="text-2xl font-bold">{{ person?.firstname }} {{ person?.lastname }}</h1>
+      <p class="text-gray-500 text-sm">{{ person?.housename }}</p>
+    </div>
+
+    <!-- Lebensdaten -->
+    <div class="space-y-4">
+      <div class="flex justify-between">
+        <span class="font-semibold text-gray-700">Geburtsjahr:</span>
+        <span class="text-gray-900">{{ person?.birthyear }}</span>
+      </div>
+
+      <div class="flex justify-between">
+        <span class="font-semibold text-gray-700">Verstorben am:</span>
+        <span class="text-gray-900">
+          {{ person?.date_of_death ? (person?.date_of_death | date: 'longDate') : '–' }}
+        </span>
+      </div>
+
+      <div class="flex justify-between">
+        <span class="font-semibold text-gray-700">Alter:</span>
+        <span class="text-gray-900">{{ person?.age }}</span>
+      </div>
+
+      <div class="flex justify-between">
+        <span class="font-semibold text-gray-700">Grab:</span>
+        <span class="text-gray-900">{{ person?.grave }}</span>
+      </div>
+    </div>
+
+    <!-- Optional: Zurück-Button -->
+    <div class="mt-6 text-center">
+      <button routerLink="/" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold">
+        Zurück zur Suche
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Friedhofsplan -->
+<!--
+<div class="max-w-4xl w-full mb-6">
+  <h2 class="text-xl font-semibold mb-2 text-center">Friedhofsplan</h2>
+  <img
+    src="friedhofsplan.png"
+    alt="Friedhofsplan Altenberg"
+    class="w-full h-auto rounded-lg shadow-md"
+  >
+</div>
+-->

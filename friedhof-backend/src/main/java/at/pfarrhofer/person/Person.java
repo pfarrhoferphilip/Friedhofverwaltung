@@ -5,24 +5,30 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
-@NamedQuery(
-        name = Person.FIND_BY_NAME,
-        query = """
-        SELECT p 
+@NamedQueries({
+        @NamedQuery(
+                name = Person.FIND_BY_NAME,
+                query = """
+        
+                        SELECT p 
         FROM Person p
         WHERE LOWER(p.firstname) LIKE LOWER(CONCAT('%', :search, '%'))
         OR LOWER(p.lastname) LIKE LOWER(CONCAT('%', :search, '%'))
         OR LOWER(p.housename) LIKE LOWER(CONCAT('%', :search, '%'))
         OR LOWER(CONCAT(p.firstname, ' ', p.lastname)) LIKE LOWER(CONCAT('%', :search, '%'))
         OR LOWER(CONCAT(p.lastname, ' ', p.firstname)) LIKE LOWER(CONCAT('%', :search, '%'))
-        """
-)
+        ORDER BY dateOfDeath DESC
+             """
+),
+        @NamedQuery(name = Person.FIND_ALL, query = "SELECT p FROM Person p ORDER BY lastname")
+})
 
 
 
 @Entity
 public class Person {
-public static final String FIND_BY_NAME = "Person.findByName";
+    public static final String FIND_BY_NAME = "Person.findByName";
+    public static final String FIND_ALL = "Person.findAll";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,11 +101,7 @@ public static final String FIND_BY_NAME = "Person.findByName";
     }
 
     public LocalDate getDateOfDeath() {
-        if (dateOfDeath != null) {
-            return dateOfDeath;
-        }
-
-        return LocalDate.now();
+        return dateOfDeath;
     }
 
     public void setDateOfDeath(LocalDate dateOfDeath) {

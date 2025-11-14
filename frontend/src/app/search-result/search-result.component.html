@@ -1,0 +1,16 @@
+<div [routerLink]="['/person', person.id]" class="p-4 bg-white rounded-lg shadow flex items-center space-x-4">
+  <!-- Optional: Initialen-Avatar -->
+  <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold">
+    {{ person.firstname.charAt(0) }}{{ person.lastname.charAt(0) }}
+  </div>
+
+  <!-- Name + Hausname -->
+  <div>
+    <div class="font-semibold text-lg">
+      {{ person.firstname }} {{ person.lastname }}
+    </div>
+    <div class="text-gray-500 text-sm" *ngIf="person.housename">
+      {{ person.housename }}
+    </div>
+  </div>
+</div>

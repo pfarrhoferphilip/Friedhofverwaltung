@@ -16,4 +16,10 @@ public class PersonRepository implements PanacheRepository<Person> {
                 .setParameter("search", name)
                 .getResultList();
     }
+
+    public List<Person> findAllSorted() {
+        return getEntityManager()
+                .createNamedQuery(Person.FIND_ALL, Person.class)
+                .getResultList();
+    }
 }

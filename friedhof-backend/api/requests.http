@@ -1,2 +1,5 @@
 ### Get all Persons
 GET http://localhost:8080/api/persons
+
+### Get Persons by name
+GET http://localhost:8080/api/persons/name/Pfa

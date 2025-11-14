@@ -1,0 +1,25 @@
+<form (ngSubmit)="onSearch()" class="pt-6 sticky top-0 bg-white z-50"> <!-- sticky + Hintergrund + z-index -->
+  <div class="flex items-center shadow-lg rounded-full overflow-hidden bg-white max-w-xl mx-auto">
+    <input
+      type="text"
+      placeholder="Vor- Nach- oder Hausname"
+      [(ngModel)]="searchTerm"
+      name="search"
+      class="flex-grow px-6 py-4 text-lg focus:outline-none"
+    >
+    <button
+      type="submit"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 text-lg font-semibold"
+    >
+      Suchen
+    </button>
+  </div>
+</form>
+
+<div class="max-w-xl mx-auto space-y-4 pt-4">
+  <app-search-result *ngFor="let p of results" [person]="p"></app-search-result>
+</div>
+
+<div *ngIf="(results?.length == 0 || results == undefined) && hasSearched" class="text-center text-red-500 font-semibold py-4">
+  Keine Personen gefunden.
+</div>
