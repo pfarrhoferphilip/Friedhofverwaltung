@@ -10,7 +10,7 @@ export class SearchService {
 
   httpClient: HttpClient = inject(HttpClient);
 
-  private readonly url: string = '/api';
+  private readonly url: string = 'api.philip-pfarrhofer.at/api';
 
   constructor() { }
 
