@@ -1,0 +1,27 @@
+Gräberbezeichnung:
+
+P-01 - Priestergrab links
+P-02 - Priestergrab rechts
+
+W-01 - Grabstein steht an der Westwand
+
+
+
+
+1-2-20	Dorninger_Magdalena_12-03-2009
+2-3-06	Aichhorn_Hildegard_11-09-2022
+3-3-04	Kellerer-Mayr_Franz_27-08-2025
+4-1-17	Oggolder_Franz_19-08-2020
+4-6-11	Pfarrhofer_Herbert_13-06-2024
+5-4-05	Schwarz_Ferdinand_15-02-2023
+6-1-06	Pichler_Franz_16-04-2016
+7-12	Hausl_Joy_01-09-2012
+8-1-14	Noska_Martina_17-05-2021
+
+
+
+
+
+P-01	Paster_Alois_01-07-1990
+
+Gallneukirchen	Grosser_Franziska_12-06-2023

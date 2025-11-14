@@ -1,0 +1,2 @@
+### Get all Persons
+GET http://localhost:8080/api/persons

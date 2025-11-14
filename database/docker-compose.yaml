@@ -1,0 +1,14 @@
+services:
+
+  postgres:
+    container_name: friedhof-postgres
+    image: postgres:18-alpine
+    ports:
+      - 5432:5432
+    restart: always
+    shm_size: 128mb
+      
+    environment:
+      - POSTGRES_PASSWORD=4DK88W61f56a17xK
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=friedhofverwaltung
