@@ -1,0 +1,2 @@
+docker push pfarrhoferphilip/friedhof-backend
+docker push pfarrhoferphilip/friedhof-frontend
