@@ -20,7 +20,8 @@ import java.time.LocalDate;
         ORDER BY dateOfDeath DESC
              """
 ),
-        @NamedQuery(name = Person.FIND_ALL, query = "SELECT p FROM Person p ORDER BY lastname")
+        @NamedQuery(name = Person.FIND_ALL, query = "SELECT p FROM Person p ORDER BY lastname"),
+        @NamedQuery(name = Person.FIND_BY_GRAVE, query = "SELECT p FROM Person p WHERE grave.id = :id")
 })
 
 
@@ -29,6 +30,7 @@ import java.time.LocalDate;
 public class Person {
     public static final String FIND_BY_NAME = "Person.findByName";
     public static final String FIND_ALL = "Person.findAll";
+    public static final String FIND_BY_GRAVE = "Person.findByGrave";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +43,7 @@ public class Person {
     @Column(name = "date_of_death")
     LocalDate dateOfDeath;
     Integer age;
-    @ManyToOne
+    @ManyToOne()
     Grave grave;
 
     public Person() {}

@@ -24,8 +24,20 @@ export class GraveService {
     return this.httpClient.get<SimpleGrave>(`${this.url}/graves/${id}`);
   }
 
+  getWholeById(id: number): Observable<Grave> {
+    return this.httpClient.get<Grave>(`${this.url}/graves/whole/${id}`);
+  }
+
   post(grave: Grave): Observable<Grave> {
     return this.httpClient.post<Grave>(`${this.url}/graves`, grave);
+  }
+
+  update(grave: Grave): Observable<Grave> {
+    return this.httpClient.put<Grave>(`${this.url}/graves`, grave);
+  }
+
+  delete(id: number): Observable<number> {
+    return this.httpClient.delete<number>(`${this.url}/graves/${id}`);
   }
 
   constructor() { }

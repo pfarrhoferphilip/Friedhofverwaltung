@@ -25,6 +25,7 @@ export class AdminComponent implements OnInit{
   searchService: SearchService = inject(SearchService);
   selectedPersonId: number = 0;
   persons: Person[] = [];
+  selectedGraveId: number = 0;
 
   ngOnInit(): void {
     this.setGraves();
@@ -167,6 +168,7 @@ export class AdminComponent implements OnInit{
 
     this.searchService.update(payload).subscribe(response => {
       console.log(response);
+      alert("Person erfolgreich aktualisiert!");
     })
   }
 
@@ -184,6 +186,60 @@ export class AdminComponent implements OnInit{
         age: undefined,
         grave_id: undefined
       }
+      alert("Person erfolgreich gelöscht!");
+    })
+  }
+
+  graveUpdateForm: Partial<Grave> = {
+    sector: undefined,
+    row: undefined,
+    col: undefined,
+    col2: undefined,
+    special_name: '',
+    pos_x: undefined,
+    pos_y: undefined
+  };
+
+  onImageClickUpdate(event: MouseEvent, img: HTMLImageElement) {
+    const x = event.offsetX / img.clientWidth;
+    const y = event.offsetY / img.clientHeight;
+
+    this.graveUpdateForm.pos_x = Number(x.toFixed(6));
+    this.graveUpdateForm.pos_y = Number(y.toFixed(6));
+  }
+
+  loadGraveData() {
+    this.graveService.getWholeById(this.selectedGraveId).subscribe(grave => {
+      console.log(grave);
+      this.graveUpdateForm = grave;
+    })
+  }
+
+  deleteGrave() {
+    this.graveService.delete(this.selectedGraveId).subscribe(response => {
+      console.log(response);
+      alert("Grab erfolgreich gelöscht!");
+      this.setGraves();
+    })
+  }
+
+  updateGrave() {
+
+    const gravePayload: Grave = {
+      id: this.selectedGraveId,
+      sector: this.graveUpdateForm.sector ?? 0,
+      row: this.graveUpdateForm.row ?? 0,
+      col: this.graveUpdateForm.col ?? 0,
+      col2: this.graveUpdateForm.col2 ?? 0,
+      special_name: this.graveUpdateForm.special_name ?? '',
+      pos_x: this.graveUpdateForm.pos_x ?? 0,
+      pos_y: this.graveUpdateForm.pos_y ?? 0,
+    };
+
+    this.graveService.update(gravePayload).subscribe(response => {
+      console.log(response);
+      this.setGraves();
+      alert("Grab erfolgreich aktualisiert!");
     })
   }
 

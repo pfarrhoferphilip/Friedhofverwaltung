@@ -19,7 +19,7 @@ public class Grave {
     Integer col2;
     @Column(name = "special_name")
     String specialName;
-    @OneToMany(mappedBy = "grave")
+    @OneToMany(mappedBy = "grave", cascade = CascadeType.REMOVE)
     List<Person> persons;
 
     public Grave() {}
@@ -100,6 +100,9 @@ public class Grave {
     }
 
     public Integer getSector() {
+        if (sector == null) {
+            return 0;
+        }
         return sector;
     }
 
@@ -108,6 +111,9 @@ public class Grave {
     }
 
     public Integer getRow() {
+        if (row == null) {
+            return 0;
+        }
         return row;
     }
 
@@ -116,6 +122,9 @@ public class Grave {
     }
 
     public Integer getCol() {
+        if (col == null) {
+            return 0;
+        }
         return col;
     }
 
@@ -124,6 +133,9 @@ public class Grave {
     }
 
     public Integer getCol2() {
+        if (col2 == null) {
+            return 0;
+        }
         return col2;
     }
 

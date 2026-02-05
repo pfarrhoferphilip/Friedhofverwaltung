@@ -1,6 +1,7 @@
 package at.pfarrhofer.grave;
 
 public record GraveCreateDTO(
+        long id,
         int sector,
         int row,
         int col,

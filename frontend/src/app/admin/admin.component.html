@@ -220,5 +220,104 @@
 
     </div>
 
+    <!-- ================= GRAB UPDATEN ================= -->
+    <div class="bg-white rounded-xl shadow-lg p-6">
+      <h2 class="text-2xl font-bold mb-4">Grab aktualisieren</h2>
+
+      <form class="grid grid-cols-1 md:grid-cols-2 gap-4"
+            (ngSubmit)="updateGrave()">
+
+        <!-- Dropdown: Grab auswählen -->
+        <select required
+                [(ngModel)]="selectedGraveId" name="selectedGraveId"
+                (change)="loadGraveData()"
+                class="w-full border border-gray-300 rounded-lg p-3 bg-white text-gray-700
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                   shadow-sm transition md:col-span-2">
+          <option value="" disabled selected>Grab auswählen</option>
+          @for (grave of graves; track grave.id) {
+            <option [value]="grave.id">
+              {{ grave.name }}
+            </option>
+          }
+        </select>
+
+        <!-- Sektor -->
+        <input type="number" placeholder="Sektor"
+               required
+               [(ngModel)]="graveUpdateForm.sector" name="sector"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <!-- Reihe -->
+        <input type="number" placeholder="Reihe"
+               required
+               [(ngModel)]="graveUpdateForm.row" name="row"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <!-- Spalte -->
+        <input type="number" placeholder="Spalte (col)"
+               required
+               [(ngModel)]="graveUpdateForm.col" name="col"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <!-- Spalte 2 -->
+        <input type="number" placeholder="Spalte 2 (col2, optional)"
+               [(ngModel)]="graveUpdateForm.col2" name="col2"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <!-- Sondername -->
+        <input type="text" placeholder="Sondername (z.B. Priestergrab, Urnengrab, etc.)"
+               [(ngModel)]="graveUpdateForm.special_name" name="special_name"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full md:col-span-2">
+
+        <!-- ===== BILD ZUR POSITIONIERUNG ===== -->
+        <div class="md:col-span-2 mt-4">
+
+          <p class="font-semibold mb-2">Grabposition ändern (klicken):</p>
+
+          <div class="relative border rounded-lg shadow-lg overflow-hidden">
+            <img #mapImage
+                 src="friedhofsplan.png"
+                 class="w-full h-auto cursor-crosshair"
+                 (click)="onImageClickUpdate($event, mapImage)">
+
+            <!-- Marker -->
+            <div *ngIf="graveUpdateForm as gf"
+                 class="absolute w-4 h-4 bg-red-600 rounded-full border-2 border-white shadow-lg"
+                 [style.left.%]="gf.pos_x! * 100"
+                 [style.top.%]="gf.pos_y! * 100">
+            </div>
+          </div>
+
+          <!-- Koordinaten Anzeige -->
+          <div class="text-sm text-gray-600 mt-2">
+        <span *ngIf="graveUpdateForm.pos_x !== null">
+          X: {{ graveUpdateForm.pos_x | number:'1.4-4' }},
+          Y: {{ graveUpdateForm.pos_y | number:'1.4-4' }}
+        </span>
+            <span *ngIf="graveUpdateForm.pos_x === null">
+          Keine Position gewählt
+        </span>
+          </div>
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="md:col-span-2 flex gap-4">
+          <button type="submit"
+                  class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg">
+            Grab speichern
+          </button>
+
+          <button type="button" (click)="deleteGrave()"
+                  class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg">
+            Grab löschen
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+
   </div>
 </div>
