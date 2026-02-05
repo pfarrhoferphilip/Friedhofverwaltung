@@ -1,9 +1,9 @@
 package at.pfarrhofer.person;
 
+import at.pfarrhofer.grave.Grave;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
 @Path("/persons")
@@ -28,6 +28,38 @@ public class PersonResource {
     @GET
     public Response getPersonById(@PathParam("id") long id) {
         return Response.ok(personMapper.toResource(personRepository.findById(id))).build();
+    }
+
+    @POST
+    @Transactional
+    public Response createPerson(PersonDTO dto) {
+        Person person = new Person(dto.firstname(), dto.lastname(), dto.housename(), dto.birthyear(), dto.date_of_death(), dto.age(),
+                personRepository.getEntityManager().find(Grave.class, dto.grave_id()));
+        personRepository.persist(person);
+        return Response.status(Response.Status.CREATED).entity(personMapper.toResource(person)).build();
+    }
+
+    @PUT
+    @Transactional
+    public Response updatePerson(PersonDTO dto) {
+        Person person = personRepository.findById(dto.id());
+        person.setFirstname(dto.firstname());
+        person.setLastname(dto.lastname());
+        person.setHousename(dto.housename());
+        person.setBirthyear(dto.birthyear());
+        person.setGrave(personRepository.getEntityManager().find(Grave.class, dto.grave_id()));
+        person.setDateOfDeath(dto.date_of_death());
+        person.setAge(dto.age());
+        personRepository.persist(person);
+        return Response.ok(personMapper.toResource(person)).build();
+    }
+
+    @Path("/{id}")
+    @DELETE
+    @Transactional
+    public Response deletePerson(@PathParam("id") long id) {
+        personRepository.deleteById(id);
+        return Response.noContent().entity(id).build();
     }
 
 }

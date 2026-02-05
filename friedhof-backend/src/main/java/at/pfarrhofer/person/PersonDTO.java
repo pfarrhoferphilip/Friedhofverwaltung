@@ -10,6 +10,7 @@ public record PersonDTO(
         int birthyear,
         LocalDate date_of_death,
         int age,
-        String grave
+        String grave,
+        long grave_id
 ) {
 }

@@ -13,12 +13,26 @@ public class Grave {
     Integer sector;
     Integer row;
     Integer col;
+    Double posX;
+    Double posY;
     @Column(nullable = true)
     Integer col2;
     @Column(name = "special_name")
     String specialName;
     @OneToMany(mappedBy = "grave")
     List<Person> persons;
+
+    public Grave() {}
+
+    public Grave(Integer sector, Integer row, Integer col, Integer col2, String specialName, double posX, double posY) {
+        this.sector = sector;
+        this.row = row;
+        this.col = col;
+        this.col2 = col2;
+        this.specialName = specialName;
+        this.posX = posX;
+        this.posY = posY;
+    }
 
     public String getGraveName() {
 
@@ -37,6 +51,36 @@ public class Grave {
         }
 
         return name;
+    }
+
+    public Double getPosX() {
+        if (posX != null) {
+            return posX;
+        }
+        return 0.0;
+    }
+
+    public void setPosX(Double posX) {
+        this.posX = posX;
+    }
+
+    public Double getPosY() {
+        if (posY != null) {
+            return posY;
+        }
+        return 0.0;
+    }
+
+    public void setPosY(Double posY) {
+        this.posY = posY;
+    }
+
+    public String getSpecialName() {
+        return specialName;
+    }
+
+    public void setSpecialName(String specialName) {
+        this.specialName = specialName;
     }
 
     public List<Person> getPersons() {

@@ -44,6 +44,18 @@ public class Person {
     @ManyToOne
     Grave grave;
 
+    public Person() {}
+
+    public Person(String firstname, String lastname, String housename, Integer birthyear, LocalDate dateOfDeath, Integer age, Grave grave) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.housename = housename;
+        this.birthyear = birthyear;
+        this.dateOfDeath = dateOfDeath;
+        this.age = age;
+        this.grave = grave;
+    }
+
     public Long getId() {
         return id;
     }

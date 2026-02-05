@@ -3,3 +3,9 @@ GET http://localhost:8080/api/persons
 
 ### Get Persons by name
 GET http://localhost:8080/api/persons/name/Pfa
+
+### Create new Person
+POST http://localhost:8080/api/persons
+
+### Delete Person
+DELETE http://localhost:8080/api/persons/477

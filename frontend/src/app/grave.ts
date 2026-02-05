@@ -5,4 +5,6 @@ export interface Grave {
   col: number;
   col2: number;
   special_name: string;
+  pos_x: number;
+  pos_y: number;
 }

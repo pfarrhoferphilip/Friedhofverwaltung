@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+<div class=" bg-gray-100 flex items-center justify-center p-4">
   <div class="bg-white shadow-lg rounded-xl max-w-md w-full p-6">
     <!-- Name + Hausname -->
     <div class="text-center mb-6">
@@ -40,6 +40,20 @@
   </div>
 </div>
 
+<div class="relative border rounded-lg shadow-lg overflow-hidden">
+  <img #mapImage
+       src="friedhofsplan.png"
+       class="w-full h-auto">
+
+  <!-- Marker -->
+  <div *ngIf="grave as gf; else noGrave"
+       class="absolute w-3 h-3 bg-red-600 rounded-full border-2 border-white shadow-lg"
+       [style.left.%]="gf.pos_x! * 100"
+       [style.top.%]="gf.pos_y! * 100">
+  </div>
+
+  <ng-template #noGrave></ng-template>
+</div>
 <!-- Friedhofsplan -->
 <!--
 <div class="max-w-4xl w-full mb-6">

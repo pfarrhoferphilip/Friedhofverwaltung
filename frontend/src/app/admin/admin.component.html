@@ -1,1 +1,224 @@
-<p>admin works!</p>
+<!-- admin.component.html -->
+<div class="min-h-screen bg-gray-100 p-4">
+
+  <div class="max-w-5xl mx-auto space-y-10">
+
+    <!-- ================= PERSON ANLEGEN ================= -->
+    <div class="bg-white rounded-xl shadow-lg p-6">
+      <h2 class="text-2xl font-bold mb-4">Person anlegen</h2>
+
+      <form class="grid grid-cols-1 md:grid-cols-2 gap-4"
+            (ngSubmit)="createPerson()">
+
+        <input required type="text" placeholder="Vorname"
+               [(ngModel)]="personForm.firstname" name="firstname"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <input required type="text" placeholder="Nachname"
+               [(ngModel)]="personForm.lastname" name="lastname"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <input type="text" placeholder="Hausname"
+               [(ngModel)]="personForm.housename" name="housename"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <input type="number" placeholder="Geburtsjahr"
+               [(ngModel)]="personForm.birthyear" name="birthyear"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <input type="date" placeholder="Sterbedatum"
+               [(ngModel)]="personForm.date_of_death" name="date_of_death"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <input type="number" placeholder="Alter"
+               [(ngModel)]="personForm.age" name="age"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <select required
+                [(ngModel)]="personForm.grave_id" name="grave_id"
+                class="w-full border border-gray-300 rounded-lg p-3 bg-white text-gray-700
+                 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                 shadow-sm transition">
+
+          <option value="" disabled selected>Grab auswählen</option>
+
+          @for (grave of graves; track grave.id) {
+            <option [value]="grave.id">{{grave.name}}</option>
+          }
+        </select>
+
+        <div class="md:col-span-2">
+          <button type="submit"
+                  class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg">
+            Person speichern
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+
+
+    <!-- ================= PERSON UPDATEN ================= -->
+    <div class="bg-white rounded-xl shadow-lg p-6">
+      <h2 class="text-2xl font-bold mb-4">Person aktualisieren</h2>
+
+      <form class="grid grid-cols-1 md:grid-cols-2 gap-4"
+            (ngSubmit)="updatePerson()">
+
+        <!-- Dropdown: Person auswählen -->
+        <select required
+                [(ngModel)]="selectedPersonId" name="selectedPersonId"
+                (change)="loadPersonData()"
+                class="w-full border border-gray-300 rounded-lg p-3 bg-white text-gray-700
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                   shadow-sm transition">
+          <option value="" disabled selected>Person auswählen</option>
+          <option *ngFor="let person of persons" [value]="person.id">
+            {{ person.firstname }} {{ person.lastname }}
+          </option>
+        </select>
+
+        <!-- Vorname -->
+        <input required type="text" placeholder="Vorname"
+               [(ngModel)]="personUpdateForm.firstname" name="firstname"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <!-- Nachname -->
+        <input required type="text" placeholder="Nachname"
+               [(ngModel)]="personUpdateForm.lastname" name="lastname"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <!-- Hausname -->
+        <input type="text" placeholder="Hausname"
+               [(ngModel)]="personUpdateForm.housename" name="housename"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <!-- Geburtsjahr -->
+        <input type="number" placeholder="Geburtsjahr"
+               [(ngModel)]="personUpdateForm.birthyear" name="birthyear"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <!-- Sterbedatum -->
+        <input type="date" placeholder="Sterbedatum"
+               [(ngModel)]="personUpdateForm.date_of_death" name="date_of_death"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <!-- Alter -->
+        <input type="number" placeholder="Alter"
+               [(ngModel)]="personUpdateForm.age" name="age"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <!-- Grab auswählen -->
+        <select required
+                [(ngModel)]="personUpdateForm.grave_id" name="grave_id"
+                class="w-full border border-gray-300 rounded-lg p-3 bg-white text-gray-700
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                   shadow-sm transition">
+          <option value="" disabled selected>Grab auswählen</option>
+          <option *ngFor="let grave of graves" [value]="grave.id">
+            {{ grave.name }}
+          </option>
+        </select>
+
+        <!-- Buttons: Update & Delete -->
+        <div class="md:col-span-2 flex gap-4">
+          <button type="submit"
+                  class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg">
+            Person speichern
+          </button>
+          <button type="button" (click)="deletePerson()"
+                  class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg">
+            Person löschen
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+
+
+    <!-- ================= GRAB ANLEGEN ================= -->
+    <div class="bg-white rounded-xl shadow-lg p-6">
+      <h2 class="text-2xl font-bold mb-4">Grab anlegen</h2>
+
+      <form class="grid grid-cols-1 md:grid-cols-2 gap-4"
+            (ngSubmit)="createGrave()">
+
+        <!-- Sektor -->
+        <input type="number" placeholder="Sektor"
+               required
+               [(ngModel)]="graveForm.sector" name="sector"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <!-- Reihe -->
+        <input type="number" placeholder="Reihe"
+               required
+               [(ngModel)]="graveForm.row" name="row"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <!-- Spalte -->
+        <input type="number" placeholder="Spalte (col)"
+               required
+               [(ngModel)]="graveForm.col" name="col"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <!-- Spalte 2 -->
+        <input type="number" placeholder="Spalte 2 (col2, optional)"
+               [(ngModel)]="graveForm.col2" name="col2"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full">
+
+        <!-- Sondername -->
+        <input type="text" placeholder="Sondername (z.B. Priestergrab, Urnengrab, etc.)"
+               [(ngModel)]="graveForm.special_name" name="special_name"
+               class="border rounded-lg p-3 focus:outline-none focus:ring w-full md:col-span-2">
+
+        <!-- ===== BILD ZUR POSITIONIERUNG ===== -->
+        <div class="md:col-span-2 mt-4">
+
+          <p class="font-semibold mb-2">Grabposition festlegen (klicken):</p>
+
+          <div class="relative border rounded-lg shadow-lg overflow-hidden">
+            <img #mapImage
+                 src="friedhofsplan.png"
+                 class="w-full h-auto cursor-crosshair"
+                 (click)="onImageClick($event, mapImage)">
+
+            <!-- Marker -->
+            <div *ngIf="graveForm as gf; else noGrave"
+                 class="absolute w-4 h-4 bg-red-600 rounded-full border-2 border-white shadow-lg"
+                 [style.left.%]="gf.pos_x! * 100"
+                 [style.top.%]="gf.pos_y! * 100">
+            </div>
+
+            <ng-template #noGrave></ng-template>
+          </div>
+
+          <!-- Koordinaten Anzeige -->
+          <div class="text-sm text-gray-600 mt-2">
+      <span *ngIf="graveForm.pos_x !== null">
+        X: {{ graveForm.pos_x | number:'1.4-4' }},
+        Y: {{ graveForm.pos_y | number:'1.4-4' }}
+      </span>
+            <span *ngIf="graveForm.pos_x === null">
+        Keine Position gewählt
+      </span>
+          </div>
+
+        </div>
+
+        <!-- Submit -->
+        <div class="md:col-span-2">
+          <button type="submit"
+                  class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg">
+            Grab speichern
+          </button>
+        </div>
+
+      </form>
+
+
+    </div>
+
+  </div>
+</div>
