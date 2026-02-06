@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.config.ConfigProvider;
 
 import java.util.List;
 
@@ -37,7 +38,12 @@ public class GraveResource {
 
     @POST
     @Transactional
-    public Response addGrave(GraveCreateDTO dto) {
+    @Path("/{password}")
+    public Response addGrave(GraveCreateDTO dto, @PathParam("password") String password) {
+        if (!ConfigProvider.getConfig().getValue("admin.password", String.class).equals(password)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         Grave grave = new Grave(dto.sector(), dto.row(), dto.col(), dto.col2(), dto.special_name(),
                 dto.pos_x(), dto.pos_y());
         graveRepository.persist(grave);
@@ -46,7 +52,12 @@ public class GraveResource {
 
     @PUT
     @Transactional
-    public Response updateGrave(GraveCreateDTO dto) {
+    @Path("/{password}")
+    public Response updateGrave(GraveCreateDTO dto, @PathParam("password") String password) {
+        if (!ConfigProvider.getConfig().getValue("admin.password", String.class).equals(password)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         Grave grave = graveRepository.findById(dto.id());
         grave.setSector(dto.sector());
         grave.setRow(dto.row());
@@ -62,8 +73,11 @@ public class GraveResource {
 
     @DELETE
     @Transactional
-    @Path("/{id}")
-    public Response deleteGrave(@PathParam("id") long id) {
+    @Path("/{id}/{password}")
+    public Response deleteGrave(@PathParam("id") long id, @PathParam("password") String password) {
+        if (!ConfigProvider.getConfig().getValue("admin.password", String.class).equals(password)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
 
         graveRepository.deleteById(id);
         return Response.noContent().entity(id).build();

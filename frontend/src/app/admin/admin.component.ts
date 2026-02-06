@@ -6,6 +6,7 @@ import {SimpleGrave} from '../simple-grave';
 import {Person} from '../person';
 import {SearchService} from '../search.service';
 import {FormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -26,8 +27,13 @@ export class AdminComponent implements OnInit{
   selectedPersonId: number = 0;
   persons: Person[] = [];
   selectedGraveId: number = 0;
+  router: Router = inject(Router);
 
   ngOnInit(): void {
+    if (!sessionStorage.getItem('password')) {
+      this.router.navigate(['/login']);
+    }
+
     this.setGraves();
     this.setPersons();
   }

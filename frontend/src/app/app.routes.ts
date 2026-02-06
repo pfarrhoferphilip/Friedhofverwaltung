@@ -3,6 +3,7 @@ import {SearchComponent} from './search/search.component';
 import {PersonComponent} from './person/person.component';
 import {AdminComponent} from './admin/admin.component';
 import {NotFoundComponent} from './not-found/not-found.component';
+import {LoginComponent} from './login/login.component';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,11 @@ export const routes: Routes = [
     title: "Admin Seite",
     path: "admin",
     component: AdminComponent
+  },
+  {
+    title: "Admin Login",
+    path: "login",
+    component: LoginComponent
   },
   {
     title: "Seite nicht gefunden",

@@ -30,15 +30,15 @@ export class SearchService {
   }
 
   post(person: Person): Observable<Person> {
-    return this.httpClient.post<Person>(`${this.url}/persons`, person);
+    return this.httpClient.post<Person>(`${this.url}/persons/` + sessionStorage.getItem("password"), person);
   }
 
   update(person: Person): Observable<Person> {
-    return this.httpClient.put<Person>(`${this.url}/persons`, person);
+    return this.httpClient.put<Person>(`${this.url}/persons/` + sessionStorage.getItem("password"), person);
   }
 
   delete(id: number): Observable<number> {
     console.log(`${this.url}/persons/${id}`);
-    return this.httpClient.delete<number>(`${this.url}/persons/${id}`);
+    return this.httpClient.delete<number>(`${this.url}/persons/${id}/` + sessionStorage.getItem("password"));
   }
 }

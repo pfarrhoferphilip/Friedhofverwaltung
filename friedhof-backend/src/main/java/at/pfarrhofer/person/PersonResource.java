@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.config.ConfigProvider;
 
 @Path("/persons")
 public class PersonResource {
@@ -32,7 +33,12 @@ public class PersonResource {
 
     @POST
     @Transactional
-    public Response createPerson(PersonDTO dto) {
+    @Path("/{password}")
+    public Response createPerson(PersonDTO dto, @PathParam("password") String password) {
+        if (!ConfigProvider.getConfig().getValue("admin.password", String.class).equals(password)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         Person person = new Person(dto.firstname(), dto.lastname(), dto.housename(), dto.birthyear(), dto.date_of_death(), dto.age(),
                 personRepository.getEntityManager().find(Grave.class, dto.grave_id()));
         personRepository.persist(person);
@@ -41,7 +47,12 @@ public class PersonResource {
 
     @PUT
     @Transactional
-    public Response updatePerson(PersonDTO dto) {
+    @Path("/{password}")
+    public Response updatePerson(PersonDTO dto, @PathParam("password") String password) {
+        if (!ConfigProvider.getConfig().getValue("admin.password", String.class).equals(password)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         Person person = personRepository.findById(dto.id());
         person.setFirstname(dto.firstname());
         person.setLastname(dto.lastname());
@@ -54,10 +65,14 @@ public class PersonResource {
         return Response.ok(personMapper.toResource(person)).build();
     }
 
-    @Path("/{id}")
+    @Path("/{id}/{password}")
     @DELETE
     @Transactional
-    public Response deletePerson(@PathParam("id") long id) {
+    public Response deletePerson(@PathParam("id") long id, @PathParam("password") String password) {
+        if (!ConfigProvider.getConfig().getValue("admin.password", String.class).equals(password)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         personRepository.deleteById(id);
         return Response.noContent().entity(id).build();
     }

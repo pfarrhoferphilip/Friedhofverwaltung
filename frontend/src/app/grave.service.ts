@@ -29,15 +29,15 @@ export class GraveService {
   }
 
   post(grave: Grave): Observable<Grave> {
-    return this.httpClient.post<Grave>(`${this.url}/graves`, grave);
+    return this.httpClient.post<Grave>(`${this.url}/graves/` + sessionStorage.getItem("password"), grave);
   }
 
   update(grave: Grave): Observable<Grave> {
-    return this.httpClient.put<Grave>(`${this.url}/graves`, grave);
+    return this.httpClient.put<Grave>(`${this.url}/graves/` + sessionStorage.getItem("password"), grave);
   }
 
   delete(id: number): Observable<number> {
-    return this.httpClient.delete<number>(`${this.url}/graves/${id}`);
+    return this.httpClient.delete<number>(`${this.url}/graves/${id}/` + sessionStorage.getItem("password"));
   }
 
   constructor() { }
