@@ -16,7 +16,7 @@
       <div class="flex justify-between">
         <span class="font-semibold text-gray-700">Verstorben am:</span>
         <span class="text-gray-900">
-          {{ person?.date_of_death ? (person?.date_of_death | date: 'longDate') : '–' }}
+          {{ person?.date_of_death ? (person?.date_of_death | date:'longDate':'':'de-DE') : '–' }}
         </span>
       </div>
 
@@ -47,7 +47,7 @@
 
   <!-- Marker -->
   <div *ngIf="grave as gf; else noGrave"
-       class="absolute w-3 h-3 bg-red-600 rounded-full border-2 border-white shadow-lg"
+       class="absolute w-3 h-3 bg-red-600 rounded-full border-2 border-white shadow-lg animate-marker-pop"
        [style.left.%]="gf.pos_x! * 100"
        [style.top.%]="gf.pos_y! * 100">
   </div>

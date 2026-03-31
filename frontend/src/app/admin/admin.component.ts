@@ -101,6 +101,7 @@ export class AdminComponent implements OnInit{
           age: undefined,
           grave_id: undefined
         };
+        alert("Person erfolgreich angelegt!")
     })
   }
 
@@ -137,6 +138,7 @@ export class AdminComponent implements OnInit{
         special_name: ''
       }
       this.setGraves();
+      alert("Grab erfolgreich angelegt!")
     });
 
   }
